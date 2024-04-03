@@ -1,16 +1,16 @@
 #include <windows.h>
 #include <stdio.h>
-#include <tchar.h>
+#include <stdlib.h>
 
 int main()
 {
     HANDLE hFile;
     BOOL succesfulOperation;
     char ReadBuffer[100];
-    char WriteBuffer[] = "\nCoś tam działa :)\n";
-    DWORD dwBytesToWrite = (DWORD)strlen(WriteBuffer);
-    OVERLAPPED ol = {0};
+    DWORD dwBytesToWrite = 0;
 
+    SYSTEMTIME st;
+    
     hFile = CreateFileA(
         "C:\\Users\\Damian\\source\\repos\\SerialCommunication\\Driver\\test.txt",
         GENERIC_ALL,
@@ -22,13 +22,31 @@ int main()
 
     if (hFile == INVALID_HANDLE_VALUE) 
     { 
-        printf(_T("Nie dziala"));
+        printf("Nie dziala");
         return 0; 
     }
 
     succesfulOperation = ReadFile(hFile, ReadBuffer, 99, NULL, NULL);
 
-    succesfulOperation = WriteFile(hFile, WriteBuffer, dwBytesToWrite, NULL, NULL);
+    for (int i=0 ; i<100; i++)
+    {
+        GetLocalTime(&st);
+
+        char* ptr = (char*)calloc(100, sizeof(char));
+
+        sprintf(ptr, "Application running at %.2d.%.2d.%.4d  %.2d:%.2d:%.2d\n", st.wDay, st.wMonth, st.wYear, st.wHour, st.wMinute, st.wSecond);
+
+        dwBytesToWrite = (DWORD)strlen(ptr);
+
+        //ptr = realloc(ptr, dwBytesToWrite);
+
+        succesfulOperation = WriteFile(hFile, ptr, dwBytesToWrite, NULL, NULL);
+
+        free(ptr);
+        //Sleep(1000);
+
+        //TODO: append to file instead of overwriting it
+    }
 
     CloseHandle(hFile);
 
