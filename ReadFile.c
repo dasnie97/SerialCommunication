@@ -13,7 +13,7 @@ int main()
     
     hFile = CreateFileA(
         "C:\\Users\\Damian\\source\\repos\\SerialCommunication\\Driver\\test.txt",
-        GENERIC_ALL,
+        FILE_APPEND_DATA | FILE_READ_ACCESS,
         FILE_SHARE_READ,
         NULL,
         OPEN_EXISTING,
@@ -38,14 +38,9 @@ int main()
 
         dwBytesToWrite = (DWORD)strlen(ptr);
 
-        //ptr = realloc(ptr, dwBytesToWrite);
-
         succesfulOperation = WriteFile(hFile, ptr, dwBytesToWrite, NULL, NULL);
 
         free(ptr);
-        //Sleep(1000);
-
-        //TODO: append to file instead of overwriting it
     }
 
     CloseHandle(hFile);
