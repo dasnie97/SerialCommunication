@@ -1,22 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
 
 int main()
 {
-    char array_of_chars[] = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!', '\0'};
-    int array_of_addresses[13];
+    char* mystring = "Hello World!";
+    printf(mystring);
 
-    int i=0;
-    while(array_of_chars[i])
-    {
-        array_of_addresses[i] = &array_of_chars[i];
-        printf("%c", array_of_chars[i++]);
-    }
-
-    i = 0;
-    while(array_of_addresses[i])
+    for(int i=0;i<strlen(mystring);i++)
     {
         printf("\n");
-        printf("%c", *(char*)array_of_addresses[i++]);
+        printf("%c", mystring[i]);
     }
 
     return 0;
