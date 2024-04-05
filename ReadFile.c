@@ -42,7 +42,7 @@ int main()
     HANDLE hFile = OpenFileForAppendingAndReading("C:\\Users\\Damian\\source\\repos\\SerialCommunication\\Driver\\test.txt");
     succesfulOperation = ReadFile(hFile, ReadBuffer, 99, NULL, NULL);
 
-    for (int i=0 ; i<100; i++)
+    for (int i=0 ; i<1; i++)
     {
         char* ptr = BuildStringToWrite();
         dwBytesToWrite = (DWORD)strlen(ptr);
